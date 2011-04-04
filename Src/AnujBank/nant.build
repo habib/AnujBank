@@ -1,4 +1,5 @@
 <project name="AnujBank" default="test" basedir=".">
+	<property name="nant.settings.currentframework" value="net-3.5"/>
     <description>
         Liquidity Management
     </description>
