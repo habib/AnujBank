@@ -4,7 +4,6 @@ namespace AnujBank
 {
     public class Account
     {
-
         public Account(AccountId id, ClientId clientId)
         {
             if (clientId == null)
