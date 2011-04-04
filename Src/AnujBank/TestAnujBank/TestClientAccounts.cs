@@ -44,7 +44,7 @@ namespace TestAnujBank
         }
 
         [Test]
-        public void ShouldCalculateCumulativeBalance()
+        public void ShouldCalculateNetBalance()
         {
             var account1 = new Account(new AccountId(12341234), new ClientId("ABC123"));
             var account2 = new Account(new AccountId(12341235), new ClientId("ABC123"));
@@ -55,7 +55,7 @@ namespace TestAnujBank
             clientAccounts.Add(account1);
             clientAccounts.Add(account2);
 
-            Assert.AreEqual(500.0, clientAccounts.CumulativeBalance());
+            Assert.AreEqual(500.0, clientAccounts.NetBalance());
         }
     }
 }

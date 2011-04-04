@@ -4,18 +4,18 @@ using AnujBank;
 
 namespace TestAnujBank
 {
-    public class InterestRateConfigurationManager
+    public class InterestRates
     {
 
         private double positiveInterestRate;
         private double negativeInterestRate;
         TextReader Reader { get; set; }
 
-        public InterestRateConfigurationManager()
+        public InterestRates()
         {
             
         }
-        public InterestRateConfigurationManager(TextReader reader)
+        public InterestRates(TextReader reader)
         {
             Reader = reader;
         }

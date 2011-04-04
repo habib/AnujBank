@@ -39,7 +39,7 @@ namespace AnujBank
        }
 
 
-       public double CumulativeBalance()
+       public double NetBalance()
        {
            return accounts.Sum(x => x.Balance);
        }
