@@ -43,7 +43,7 @@
     <Compile Include="Account.cs" />
     <Compile Include="AccountId.cs" />
     <Compile Include="ClientId.cs" />
-    <Compile Include="InterestRateConfigurationManager.cs" />
+    <Compile Include="InterestRates.cs" />
     <Compile Include="Feed.cs" />
     <Compile Include="FeedProcessor.cs" />
     <Compile Include="InvalidAccountIdException.cs" />
