@@ -69,7 +69,7 @@ namespace TestAnujBank
         }
 
         [Test]
-        public void ShouldComputeInterestOnNetBalance()
+        public void ShouldComputeInterestOnPositiveNetBalance()
         {
             string expected = (10.0 / 365).ToString().Substring(0, 5);
 
@@ -80,6 +80,34 @@ namespace TestAnujBank
             Assert.AreEqual(expected, GetTestStructure().NetInterest(mock.Object).ToString().Substring(0, 5));
 
             mock.VerifyAll();
+        }
+
+        [Test]
+        public void ShouldComputeInterestOnNegativeNetBalance()
+        {
+            string expected = (-15.0 / 365).ToString().Substring(0, 5);
+
+            var mock = new Mock<InterestRateConfigurationManager>();
+
+            mock.Setup(i => i.NegativeInterestRate()).Returns(3.0);
+
+            Assert.AreEqual(expected, GetTestStructureWithNegativeBalance().NetInterest(mock.Object).ToString().Substring(0, 5));
+
+            mock.VerifyAll();
+        }
+
+        private Structure GetTestStructureWithNegativeBalance()
+        {
+            var clientId = new ClientId("ABC123");
+            var account1 = new Account(new AccountId(12341234), clientId);
+            var account2 = new Account(new AccountId(12341235), clientId);
+            account1.Balance = -1000.0;
+            account2.Balance = 500.0;
+
+            var clientAccounts = new ClientAccounts();
+            clientAccounts.Add(account1);
+            clientAccounts.Add(account2);
+            return new Structure(clientAccounts);
         }
     }
 }
