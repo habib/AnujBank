@@ -23,14 +23,14 @@ namespace AnujBank
             return sourceClientAccounts.NetBalance();
         }
 
-        public double NetInterest(InterestRateConfigurationManager interestRateConfigurationManager)
+        public double NetInterest(InterestRates interestRates)
         {
             double cumulativeBalance = NetBalance();
             if(cumulativeBalance > 0)
             {
-                return interestRateConfigurationManager.PositiveInterestRate()*cumulativeBalance/36500;
+                return interestRates.PositiveInterestRate()*cumulativeBalance/36500;
             }
-            return interestRateConfigurationManager.NegativeInterestRate()*cumulativeBalance/36500;
+            return interestRates.NegativeInterestRate()*cumulativeBalance/36500;
         }
     }
 }

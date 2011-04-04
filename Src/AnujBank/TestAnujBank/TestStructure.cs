@@ -59,7 +59,7 @@ namespace TestAnujBank
         {
             string expected = (10.0 / 365).ToString().Substring(0, 5);
 
-            var mock = new Mock<InterestRateConfigurationManager>();
+            var mock = new Mock<InterestRates>();
 
             mock.Setup(i => i.PositiveInterestRate()).Returns(2.0);
 
@@ -73,7 +73,7 @@ namespace TestAnujBank
         {
             string expected = (-15.0 / 365).ToString().Substring(0, 5);
 
-            var mock = new Mock<InterestRateConfigurationManager>();
+            var mock = new Mock<InterestRates>();
 
             mock.Setup(i => i.NegativeInterestRate()).Returns(3.0);
 
