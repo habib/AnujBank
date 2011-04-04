@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 
 namespace AnujBank
@@ -32,7 +33,7 @@ namespace AnujBank
         {
             var fields=row.Split(',');
             var clientId = new ClientId(fields[0]);
-            var account = new Account(new AccountId(int.Parse(fields[1])), clientId) { Balance = double.Parse(fields[2].Trim()), LastUpdatedDate = DateTime.ParseExact(fields[3],"dd/mm/yyyy",null) };
+            var account = new Account(new AccountId(int.Parse(fields[1])), clientId) { Balance = double.Parse(fields[2].Trim()), LastUpdatedDate = DateTime.ParseExact(fields[3],"dd/MM/yyyy", CultureInfo.InvariantCulture) };
             
             Repository.Save(account);
         }
