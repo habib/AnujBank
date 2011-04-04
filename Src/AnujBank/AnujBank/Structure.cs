@@ -1,4 +1,5 @@
 ﻿using System;
+using TestAnujBank;
 
 namespace AnujBank
 {
@@ -15,6 +16,24 @@ namespace AnujBank
         public bool SharesASourceAccountWith(Structure newStructure)
         {
             return sourceClientAccounts.SharesAccountWith(newStructure.sourceClientAccounts);
+        }
+
+        public double NetBalance()
+        {
+            return sourceClientAccounts.CumulativeBalance();
+        }
+
+        public double NetInterest(InterestRateConfigurationManager interestRateConfigurationManager)
+        {
+            double cumulativeBalance = sourceClientAccounts.CumulativeBalance();
+            if(cumulativeBalance > 0)
+            {
+                return interestRateConfigurationManager.PositiveInterestRate()*cumulativeBalance/36500;
+            }
+            else
+            {
+                return interestRateConfigurationManager.NegativeInterestRate()*cumulativeBalance/36500;
+            }
         }
     }
 }

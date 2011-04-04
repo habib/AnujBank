@@ -42,5 +42,20 @@ namespace TestAnujBank
             Assert.IsTrue(clientAccounts1.SharesAccountWith(clientAccounts2));
             Assert.IsFalse(clientAccounts1.SharesAccountWith(clientAccounts3));
         }
+
+        [Test]
+        public void ShouldCalculateCumulativeBalance()
+        {
+            var account1 = new Account(new AccountId(12341234), new ClientId("ABC123"));
+            var account2 = new Account(new AccountId(12341235), new ClientId("ABC123"));
+
+            account1.Balance = 1000.0;
+            account2.Balance = -500.0;
+            var clientAccounts = new ClientAccounts();
+            clientAccounts.Add(account1);
+            clientAccounts.Add(account2);
+
+            Assert.AreEqual(500.0, clientAccounts.CumulativeBalance());
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using AnujBank;
+using Moq;
 using NUnit.Framework;
 
 namespace TestAnujBank
@@ -44,6 +45,41 @@ namespace TestAnujBank
             Assert.IsTrue(structure1.SharesASourceAccountWith(structure2));
             Assert.IsFalse(structure1.SharesASourceAccountWith(structure3));
 
+        }
+
+        [Test]
+        public void ShouldCalculateNetBalance()
+        {
+            Structure structure = GetTestStructure();
+            Assert.AreEqual(500.0d, structure.NetBalance());
+        }
+
+        private Structure GetTestStructure()
+        {
+            var clientId = new ClientId("ABC123");
+            var account1 = new Account(new AccountId(12341234), clientId);
+            var account2 = new Account(new AccountId(12341235), clientId);
+            account1.Balance = 1000.0;
+            account2.Balance = -500.0;
+           
+            var clientAccounts = new ClientAccounts();
+            clientAccounts.Add(account1);
+            clientAccounts.Add(account2);
+            return new Structure(clientAccounts);
+        }
+
+        [Test]
+        public void ShouldComputeInterestOnNetBalance()
+        {
+            string expected = (10.0 / 365).ToString().Substring(0, 5);
+
+            var mock = new Mock<InterestRateConfigurationManager>();
+
+            mock.Setup(i => i.PositiveInterestRate()).Returns(2.0);
+
+            Assert.AreEqual(expected, GetTestStructure().NetInterest(mock.Object).ToString().Substring(0, 5));
+
+            mock.VerifyAll();
         }
     }
 }

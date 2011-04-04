@@ -37,5 +37,11 @@ namespace AnujBank
        {
            return accounts.Overlaps(clientAccounts.accounts);
        }
+
+
+       public double CumulativeBalance()
+       {
+           return accounts.Sum(x => x.Balance);
+       }
    }
 }

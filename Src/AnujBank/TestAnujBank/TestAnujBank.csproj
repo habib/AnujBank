@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="TestClientAccounts.cs" />
     <Compile Include="TestFeedProcessor.cs" />
+    <Compile Include="TestInterestRateConfigurationManager.cs" />
     <Compile Include="TestPayment.cs" />
     <Compile Include="TestPaymentInstructionService.cs" />
     <Compile Include="TestStructure.cs" />
