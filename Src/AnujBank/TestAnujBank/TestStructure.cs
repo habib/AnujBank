@@ -50,22 +50,8 @@ namespace TestAnujBank
         [Test]
         public void ShouldCalculateNetBalance()
         {
-            Structure structure = GetTestStructure();
+            Structure structure = GetTestStructure(1000.0, -500);
             Assert.AreEqual(500.0d, structure.NetBalance());
-        }
-
-        private Structure GetTestStructure()
-        {
-            var clientId = new ClientId("ABC123");
-            var account1 = new Account(new AccountId(12341234), clientId);
-            var account2 = new Account(new AccountId(12341235), clientId);
-            account1.Balance = 1000.0;
-            account2.Balance = -500.0;
-           
-            var clientAccounts = new ClientAccounts();
-            clientAccounts.Add(account1);
-            clientAccounts.Add(account2);
-            return new Structure(clientAccounts);
         }
 
         [Test]
@@ -77,7 +63,7 @@ namespace TestAnujBank
 
             mock.Setup(i => i.PositiveInterestRate()).Returns(2.0);
 
-            Assert.AreEqual(expected, GetTestStructure().NetInterest(mock.Object).ToString().Substring(0, 5));
+            Assert.AreEqual(expected, GetTestStructure(1000.0, -500.0).NetInterest(mock.Object).ToString().Substring(0, 5));
 
             mock.VerifyAll();
         }
@@ -91,18 +77,18 @@ namespace TestAnujBank
 
             mock.Setup(i => i.NegativeInterestRate()).Returns(3.0);
 
-            Assert.AreEqual(expected, GetTestStructureWithNegativeBalance().NetInterest(mock.Object).ToString().Substring(0, 5));
+            Assert.AreEqual(expected, GetTestStructure(-1000.0, 500.0).NetInterest(mock.Object).ToString().Substring(0, 5));
 
             mock.VerifyAll();
         }
 
-        private Structure GetTestStructureWithNegativeBalance()
+        private Structure GetTestStructure(double balance1, double balance2)
         {
             var clientId = new ClientId("ABC123");
             var account1 = new Account(new AccountId(12341234), clientId);
             var account2 = new Account(new AccountId(12341235), clientId);
-            account1.Balance = -1000.0;
-            account2.Balance = 500.0;
+            account1.Balance = balance1;
+            account2.Balance = balance2;
 
             var clientAccounts = new ClientAccounts();
             clientAccounts.Add(account1);
