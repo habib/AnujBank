@@ -1,4 +1,5 @@
-﻿using AnujBank;
+﻿using System.Collections.Generic;
+using AnujBank;
 using NUnit.Framework;
 
 namespace TestAnujBank
@@ -15,11 +16,19 @@ namespace TestAnujBank
             var clientAccounts = new ClientAccounts();
             clientAccounts.Add(account1);
             clientAccounts.Add(account2);
-            var structure = new Structure(clientAccounts, null,null);
+            var structure = new Structure(clientAccounts, getAllocation(), null);
             var client = new Client(clientId, clientAccounts);
             client.AddStructure(structure);
             Assert.IsTrue(client.Contains(structure));
-        } 
+        }
+
+
+        private List<Allocation> getAllocation()
+        {
+            var clientId = new ClientId("ABC123");
+            var account1 = new Account(new AccountId(43214321), clientId);
+            return new List<Allocation> { new Allocation(account1, 100) };
+        }
     }
 
 }

@@ -43,5 +43,10 @@ namespace AnujBank
        {
            return accounts.Sum(x => x.Balance);
        }
+
+       public bool Contains(Account account)
+       {
+           return accounts.Contains(account);
+       }
    }
 }

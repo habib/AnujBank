@@ -13,9 +13,20 @@ namespace AnujBank
         public Structure(ClientAccounts sourceClientAccounts, List<Allocation> allocations, InterestRates interestRates)
         {
             if(sourceClientAccounts.Count < 2) throw new ArgumentException("A structure must have at least 2 source accounts.");
+            
+            float totalPercentage = 0;
+            allocations.ForEach(al => totalPercentage += al.GetAllocationPercentage());
+
+            if (totalPercentage != 100)
+                throw new ArgumentException("A structure should have 100% allocation.");
+
+            if (allocations.Count != 1 && allocations.Exists(al => !sourceClientAccounts.Contains(al.GetAccount())))
+                    throw new ArgumentException("All allocations should be in pooled account or there should be only one allocation account.");
+
             this.sourceClientAccounts = sourceClientAccounts;
             this.allocations = allocations;
             this.interestRates = interestRates;
+
         }
 
         public bool SharesASourceAccountWith(Structure newStructure)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AnujBank;
 using NUnit.Framework;
 
@@ -16,7 +17,7 @@ namespace TestAnujBank
             var clientAccounts = new ClientAccounts();
             clientAccounts.Add(account1);
             clientAccounts.Add(account2);
-            var structure = new Structure(clientAccounts, null,null);
+            var structure = new Structure(clientAccounts, getAllocation(), null);
             var structures = new Structures();
             structures.Add(structure);
 
@@ -38,13 +39,22 @@ namespace TestAnujBank
             clientAccounts2.Add(account1);
             clientAccounts2.Add(account3);
 
-            var structure1 = new Structure(clientAccounts1, null,null);
-            var structure2 = new Structure(clientAccounts2, null, null);
+            var structure1 = new Structure(clientAccounts1, getAllocation(), null);
+            var structure2 = new Structure(clientAccounts2, getAllocation(), null);
 
             var structures = new Structures();
             structures.Add(structure1);
 
             Assert.Throws<ArgumentException>(() => structures.Add(structure2));
         }
+
+
+        private List<Allocation> getAllocation()
+        {
+            var clientId = new ClientId("ABC123");
+            var account1 = new Account(new AccountId(43214321), clientId);
+            return new List<Allocation> { new Allocation(account1, 100) };
+        }
+      
     }
 }
