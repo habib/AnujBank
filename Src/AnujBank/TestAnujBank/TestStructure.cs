@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AnujBank;
 using Moq;
 using NUnit.Framework;
@@ -15,7 +16,7 @@ namespace TestAnujBank
             var account1 = new Account(new AccountId(12341234), clientId);
             var clientAccounts = new ClientAccounts();
             clientAccounts.Add(account1);
-            Assert.Throws<ArgumentException>(() => new Structure(clientAccounts));
+            Assert.Throws<ArgumentException>(() => new Structure(clientAccounts, null));
         }
 
         [Test]
@@ -30,17 +31,17 @@ namespace TestAnujBank
             var clientAccounts1 = new ClientAccounts();
             clientAccounts1.Add(account1);
             clientAccounts1.Add(account2);
-            var structure1 = new Structure(clientAccounts1);
+            var structure1 = new Structure(clientAccounts1, null);
 
             var clientAccounts2 = new ClientAccounts();
             clientAccounts2.Add(account1);
             clientAccounts2.Add(account3);
-            var structure2 = new Structure(clientAccounts2);
+            var structure2 = new Structure(clientAccounts2, null);
             
             var clientAccounts3 = new ClientAccounts();
             clientAccounts3.Add(account4);
             clientAccounts3.Add(account3);
-            var structure3 = new Structure(clientAccounts3);
+            var structure3 = new Structure(clientAccounts3, null);
 
             Assert.IsTrue(structure1.SharesASourceAccountWith(structure2));
             Assert.IsFalse(structure1.SharesASourceAccountWith(structure3));
@@ -50,7 +51,7 @@ namespace TestAnujBank
         [Test]
         public void ShouldCalculateNetBalance()
         {
-            Structure structure = GetTestStructure(1000.0, -500);
+            Structure structure = GetTestStructure(1000.0, -500, null);
             Assert.AreEqual(500.0d, structure.NetBalance());
         }
 
@@ -63,7 +64,7 @@ namespace TestAnujBank
 
             mock.Setup(i => i.PositiveInterestRate()).Returns(2.0);
 
-            Assert.AreEqual(expected, GetTestStructure(1000.0, -500.0).NetInterest(mock.Object).ToString().Substring(0, 5));
+            Assert.AreEqual(expected, GetTestStructure(1000.0, -500.0, null).NetInterest(mock.Object).ToString().Substring(0, 5));
 
             mock.VerifyAll();
         }
@@ -77,12 +78,53 @@ namespace TestAnujBank
 
             mock.Setup(i => i.NegativeInterestRate()).Returns(3.0);
 
-            Assert.AreEqual(expected, GetTestStructure(-1000.0, 500.0).NetInterest(mock.Object).ToString().Substring(0, 5));
+            Assert.AreEqual(expected, GetTestStructure(-1000.0, 500.0, null).NetInterest(mock.Object).ToString().Substring(0, 5));
 
             mock.VerifyAll();
         }
 
-        private Structure GetTestStructure(double balance1, double balance2)
+        [Test]
+        public void ShouldAllocateInterestAmountToExternalAccount()
+        {
+            const double netInterest = (10.0 / 365);
+
+            var mock = new Mock<InterestRates>();
+
+            mock.Setup(i => i.PositiveInterestRate()).Returns(2.0);
+            var clientId = new ClientId("ABC123");
+            var account1 = new Account(new AccountId(43214321), clientId);
+            var allocations = new List<Allocation> { new Allocation(account1, 100) };
+
+            var expectedMap = new Dictionary<Account, double> { { account1, netInterest } };
+
+            Assert.AreEqual(expectedMap[account1], GetTestStructure(1000.0, -500.0, allocations).GetAllocation(mock.Object)[account1]);
+
+            mock.VerifyAll();
+        }
+
+        [Test]
+        public void ShouldAllocateInterestAmountToPooledAccount()
+        {
+            const double netInterest = (10.0 / 365);
+
+            var mock = new Mock<InterestRates>();
+
+            mock.Setup(i => i.PositiveInterestRate()).Returns(2.0);
+            var clientId = new ClientId("ABC123");
+            var account1 = new Account(new AccountId(12341234), clientId);
+            var account2 = new Account(new AccountId(12341235), clientId);
+            var allocations = new List<Allocation> { new Allocation(account1, 30) , new Allocation(account2, 70)};
+
+            var expectedMap = new Dictionary<Account, double> { {account1, netInterest * 0.3} , {account2 , netInterest * 0.7}};
+
+            Assert.AreEqual(expectedMap[account1], GetTestStructure(1000.0, -500.0, allocations).GetAllocation(mock.Object)[account1]);
+            Assert.AreEqual(expectedMap[account2], GetTestStructure(1000.0, -500.0, allocations).GetAllocation(mock.Object)[account2]);
+
+            mock.VerifyAll();
+            
+        }
+
+        private static Structure GetTestStructure(double balance1, double balance2, List<Allocation> allocations)
         {
             var clientId = new ClientId("ABC123");
             var account1 = new Account(new AccountId(12341234), clientId);
@@ -93,7 +135,7 @@ namespace TestAnujBank
             var clientAccounts = new ClientAccounts();
             clientAccounts.Add(account1);
             clientAccounts.Add(account2);
-            return new Structure(clientAccounts);
+            return new Structure(clientAccounts, allocations);
         }
     }
 }

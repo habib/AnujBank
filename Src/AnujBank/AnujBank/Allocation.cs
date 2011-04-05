@@ -4,7 +4,7 @@
     {
         private readonly Account account;    
         
-        private float allocatedPercentage;
+        private readonly float allocatedPercentage;
 
         public Allocation(Account account, float allocatedPercentage)
         {
@@ -17,14 +17,19 @@
             return account.GetAccountNumber();
         }
 
+        public Account GetAccount()
+        {
+            return account;
+        }
+
         public double GetAmount()
         {
             return account.Balance;
         }
-
-        public void UpdateBalance(double finalAmount)
+        
+        public float GetAllocationPercentage()
         {
-            account.Balance += (finalAmount * (allocatedPercentage/100));
+            return allocatedPercentage;
         }
     }
 }
