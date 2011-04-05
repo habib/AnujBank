@@ -54,7 +54,7 @@ namespace TestAnujBank
         [Test]
         public void ShouldCalculateNetBalance()
         {
-            Structure structure = GetTestStructure(1000.0, -500, getAllocation(), null);
+            Structure structure = GetTestStructure(1000.0, -500, GetAllocation(), null);
             Assert.AreEqual(500.0d, structure.NetBalance());
         }
 
@@ -67,7 +67,7 @@ namespace TestAnujBank
 
             mock.Setup(i => i.PositiveInterestRate()).Returns(2.0);
 
-            Assert.AreEqual(expected, GetTestStructure(1000.0, -500.0, getAllocation(), mock.Object).NetInterest().ToString().Substring(0, 5));
+            Assert.AreEqual(expected, GetTestStructure(1000.0, -500.0, GetAllocation(), mock.Object).NetInterest().ToString().Substring(0, 5));
 
             mock.VerifyAll();
         }
@@ -81,7 +81,7 @@ namespace TestAnujBank
 
             mock.Setup(i => i.NegativeInterestRate()).Returns(3.0);
 
-            Assert.AreEqual(expected, GetTestStructure(-1000.0, 500.0, getAllocation(), mock.Object).NetInterest().ToString().Substring(0, 5));
+            Assert.AreEqual(expected, GetTestStructure(-1000.0, 500.0, GetAllocation(), mock.Object).NetInterest().ToString().Substring(0, 5));
 
             mock.VerifyAll();
         }
@@ -173,7 +173,7 @@ namespace TestAnujBank
              
         }
 
-        private static List<Allocation> getAllocation()
+        private static List<Allocation> GetAllocation()
         {
             var clientId = new ClientId("ABC123");
             var account1 = new Account(new AccountId(43214321), clientId);
