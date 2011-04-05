@@ -1,12 +1,12 @@
 ﻿namespace AnujBank
 {
-    public class TargetAccount
+    public class Allocation
     {
         private readonly Account account;    
         
         private float allocatedPercentage;
 
-        public TargetAccount(Account account, float allocatedPercentage)
+        public Allocation(Account account, float allocatedPercentage)
         {
             this.account = account;
             this.allocatedPercentage = allocatedPercentage;

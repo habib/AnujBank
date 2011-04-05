@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace TestAnujBank
 {
     [TestFixture]
-    class TestTargetAccount
+    class TestAllocation
     {
 
         [Test]
@@ -13,7 +13,7 @@ namespace TestAnujBank
         {
             var account = new Account(new AccountId(12345678), new ClientId("ABC123"))
                                   {Balance = 100, LastUpdatedDate = DateTime.Now};
-            var targetAccount = new TargetAccount(account, 2);
+            var targetAccount = new Allocation(account, 2);
             Assert.AreEqual(targetAccount.GetAccountNumber(), account.GetAccountNumber());
         }
 
@@ -21,7 +21,7 @@ namespace TestAnujBank
         public void ShouldBeAbleToUpdateTheBalance()
         {
             var account = new Account(new AccountId(12345678), new ClientId("ABC123")) { Balance = 100, LastUpdatedDate = DateTime.Now };
-            var targetAccount = new TargetAccount(account, 2);
+            var targetAccount = new Allocation(account, 2);
             targetAccount.UpdateBalance(100);
             Assert.AreEqual(102, targetAccount.GetAmount());
         }
