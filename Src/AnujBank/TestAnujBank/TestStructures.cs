@@ -16,7 +16,7 @@ namespace TestAnujBank
             var clientAccounts = new ClientAccounts();
             clientAccounts.Add(account1);
             clientAccounts.Add(account2);
-            var structure = new Structure(clientAccounts, null);
+            var structure = new Structure(clientAccounts, null,null);
             var structures = new Structures();
             structures.Add(structure);
 
@@ -38,8 +38,8 @@ namespace TestAnujBank
             clientAccounts2.Add(account1);
             clientAccounts2.Add(account3);
 
-            var structure1 = new Structure(clientAccounts1, null);
-            var structure2 = new Structure(clientAccounts2, null);
+            var structure1 = new Structure(clientAccounts1, null,null);
+            var structure2 = new Structure(clientAccounts2, null, null);
 
             var structures = new Structures();
             structures.Add(structure1);

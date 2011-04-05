@@ -8,12 +8,14 @@ namespace AnujBank
     {
         private readonly ClientAccounts sourceClientAccounts;
         private readonly List<Allocation> allocations;
+        private readonly InterestRates interestRates;
 
-        public Structure(ClientAccounts sourceClientAccounts, List<Allocation> allocations)
+        public Structure(ClientAccounts sourceClientAccounts, List<Allocation> allocations, InterestRates interestRates)
         {
             if(sourceClientAccounts.Count < 2) throw new ArgumentException("A structure must have at least 2 source accounts.");
             this.sourceClientAccounts = sourceClientAccounts;
             this.allocations = allocations;
+            this.interestRates = interestRates;
         }
 
         public bool SharesASourceAccountWith(Structure newStructure)
@@ -26,7 +28,7 @@ namespace AnujBank
             return sourceClientAccounts.NetBalance();
         }
 
-        public double NetInterest(InterestRates interestRates)
+        public double NetInterest()
         {
             double cumulativeBalance = NetBalance();
             if(cumulativeBalance > 0)
@@ -36,14 +38,15 @@ namespace AnujBank
             return interestRates.NegativeInterestRate()*cumulativeBalance/36500;
         }
 
-        public Dictionary<Account, double> GetAllocation(InterestRates interestRates)
+        public Dictionary<Account, double> GetAllocation()
         {
             var interestAllocations = new Dictionary<Account, double >();
 
+            var netInterest = NetInterest();
             allocations.ForEach(
                 allocation =>
                 interestAllocations.Add(allocation.GetAccount(),
-                                        allocation.GetAllocationPercentage() * NetInterest(interestRates) / 100));
+                                        allocation.GetAllocationPercentage() * netInterest / 100));
 
 
             return interestAllocations;

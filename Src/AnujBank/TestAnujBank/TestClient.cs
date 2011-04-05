@@ -15,7 +15,7 @@ namespace TestAnujBank
             var clientAccounts = new ClientAccounts();
             clientAccounts.Add(account1);
             clientAccounts.Add(account2);
-            var structure = new Structure(clientAccounts, null);
+            var structure = new Structure(clientAccounts, null,null);
             var client = new Client(clientId, clientAccounts);
             client.AddStructure(structure);
             Assert.IsTrue(client.Contains(structure));
