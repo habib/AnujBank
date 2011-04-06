@@ -13,6 +13,15 @@ namespace AnujBank
          accounts = new HashSet<Account>();
       }
 
+      public ClientAccounts(IEnumerable<Account> newAccounts)
+      {
+          accounts = new HashSet<Account>();
+          foreach (var newAccount in newAccounts)
+          {
+              Add(newAccount);
+          }
+      }
+
       public int Count
       {
          get { return accounts.Count; }
