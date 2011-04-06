@@ -20,4 +20,11 @@
 			<test assemblyname="TestAnujBank\bin\Debug\TestAnujBank.dll"/>
 		</nunit2>
 	</target>
+	
+	<target name="performancetest" depends="build">
+		<nunit2>
+			<formatter type="Plain" />
+			<test assemblyname="PerformanceTest\bin\Debug\PerformanceTest.dll"/>
+		</nunit2>
+	</target>
 </project>
