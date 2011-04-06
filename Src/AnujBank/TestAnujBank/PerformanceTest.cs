@@ -27,7 +27,7 @@ namespace TestAnujBank
                                                                  ClientAccount = new ClientAccounts(g), 
                                                                  Allocation=GetAllocation(g.ToList())
                                                              })
-                                            .Select(cs=>new Structure(cs.ClientAccount, cs.Allocation, interestRate.Object));
+                                            .Select(cs=>new Structure(cs.ClientAccount, cs.Allocation, interestRate.Object, null));
             var ss = structures.ToList();
 
             Assert.AreEqual(3,ss.Count);
