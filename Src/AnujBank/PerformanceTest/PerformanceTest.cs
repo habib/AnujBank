@@ -29,10 +29,10 @@ namespace PerformanceTest
                                                                  Allocation=GetAllocation(g.ToList())
                                                              })
                                             .Select(cs=>new Structure(cs.ClientAccount, cs.Allocation, interestRate.Object, paymentInstructionService));
-            var ss = structures.ToList();
+            var structureList = structures.ToList();
 
             var start = DateTime.Now.Ticks;
-            ss.ForEach(s=>s.GeneratePaymentInstruction());
+            structureList.ForEach(s=>s.GeneratePaymentInstruction());
             var stop = DateTime.Now.Ticks;
             Console.WriteLine((stop-start)/10000);
         }
