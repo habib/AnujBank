@@ -66,9 +66,10 @@ namespace AnujBank
 
         public void GeneratePaymentInstruction()
         {
+            Dictionary<Account, double> allocatedAmounts = GetAllocation();
             allocations.ForEach( al => 
                 paymentInstructionService.Generate(new Payment(al.GetAccountNumber().ToString(),
-                                                               new decimal(GetAllocation()[al.GetAccount()]), 
+                                                               new decimal(allocatedAmounts[al.GetAccount()]), 
                                                                DateTime.Now))
                 );
         }
