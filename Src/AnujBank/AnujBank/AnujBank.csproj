@@ -32,10 +32,36 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>F:\dev_induction_installables\NHibernate-2.1.0.Beta2-bin\Required_For_LazyLoading\Castle\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.DynamicProxy2">
+      <HintPath>F:\dev_induction_installables\NHibernate-2.1.0.Beta2-bin\Required_For_LazyLoading\Castle\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>F:\dev_induction_installables\NHibernate-2.1.0.Beta2-bin\Required_Bins\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="LinFu.DynamicProxy">
+      <HintPath>F:\dev_induction_installables\NHibernate-2.1.0.Beta2-bin\Required_For_LazyLoading\LinFu\LinFu.DynamicProxy.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>F:\dev_induction_installables\NHibernate-2.1.0.Beta2-bin\Required_Bins\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>F:\dev_induction_installables\NHibernate-2.1.0.Beta2-bin\Required_Bins\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.ByteCode.Castle">
+      <HintPath>F:\dev_induction_installables\NHibernate-2.1.0.Beta2-bin\Required_For_LazyLoading\Castle\NHibernate.ByteCode.Castle.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.ByteCode.LinFu">
+      <HintPath>F:\dev_induction_installables\NHibernate-2.1.0.Beta2-bin\Required_For_LazyLoading\LinFu\NHibernate.ByteCode.LinFu.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -57,6 +83,12 @@
     <Compile Include="Structure.cs" />
     <Compile Include="Structures.cs" />
     <Compile Include="Allocation.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Account.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

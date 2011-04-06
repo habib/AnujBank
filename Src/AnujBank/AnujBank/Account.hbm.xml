@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" auto-import="true" assembly="AnujBank" namespace="AnujBank">
+  <class name="Account" table="account">
+    <id name="id" access="field">
+      <generator class="native" />
+    </id>
+    <component name="AccountNo" class="AnujBank.AccountId">
+      <property name="Id" column="account_id" type="String" access="property" length="120"/>
+    </component>
+    <component name="ClientId" class="AnujBank.ClientId">
+      <property name="Id" column="client_id" type="String" length="40" access="property" />
+    </component>
+    <property name="Balance" column="balance" type="double" access="property"/>
+    <property name="LastUpdatedDate" column="last_updated_date" type="DateTime" access="property"/>
+  </class>
+</hibernate-mapping>
