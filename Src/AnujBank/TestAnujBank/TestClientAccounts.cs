@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AnujBank;
 using NUnit.Framework;
 
@@ -17,6 +18,15 @@ namespace TestAnujBank
             var clientAccounts = new ClientAccounts();
             clientAccounts.Add(account1);
             Assert.Throws<ArgumentException>(() => clientAccounts.Add(account2));
+        }
+
+        [Test]
+        public void ShouldCreateClientAccountsFromAccountCollection()
+        {
+            var clientId1 = new ClientId("ABC123");
+            var clientAccounts = new ClientAccounts(new List<Account> { new Account(new AccountId(12341234), clientId1), new Account(new AccountId(12341235), clientId1) });
+
+            Assert.AreEqual(2, clientAccounts.Count);
         }
 
         [Test]
