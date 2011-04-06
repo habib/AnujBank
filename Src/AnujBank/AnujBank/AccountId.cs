@@ -5,12 +5,17 @@ namespace AnujBank
     public class AccountId
     {
 
+        
+        public AccountId()
+        {
+            
+        }
         public AccountId(int id)
         {
             Id = id;
             Validate();
         }
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
         public bool Equals(AccountId other)
         {

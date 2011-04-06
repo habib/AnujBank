@@ -14,20 +14,35 @@ namespace AnujBank
         }
         private AccountId AccountNo { get;  set; }
         private ClientId ClientId { get;  set; }
-        public double Balance { get; set; }
-        public DateTime LastUpdatedDate { get; set; }
+        public virtual double Balance { get; set; }
+        public virtual DateTime LastUpdatedDate { get; set; }
+        private string id;
 
-        public int GetAccountNumber()
+        public Account()
+        {
+        }
+
+        public virtual string GetId()
+        {
+            return id;
+        }
+
+        public virtual void SetId(string id)
+        {
+            this.id = id;
+        }
+
+        public virtual int GetAccountNumber()
         {
             return AccountNo.Id;
         }
-        public string GetClientId()
+        public virtual string GetClientId()
         {
 
             return ClientId.Id;
         }
 
-        public bool Equals(Account other)
+        public virtual bool Equals(Account other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;

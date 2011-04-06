@@ -5,6 +5,10 @@ namespace AnujBank
     public class ClientId
     {
 
+        public ClientId()
+        {
+            
+        }
         public ClientId(string id)
         {
 
@@ -12,7 +16,7 @@ namespace AnujBank
             Validate();
         }
 
-        public string Id { get; set; }
+        public virtual string Id { get; set; }
 
         public bool Equals(ClientId other)
         {
