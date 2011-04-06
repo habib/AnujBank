@@ -9,8 +9,9 @@ namespace AnujBank
         private readonly ClientAccounts sourceClientAccounts;
         private readonly List<Allocation> allocations;
         private readonly InterestRates interestRates;
+        private readonly PaymentInstructionService paymentInstructionService;
 
-        public Structure(ClientAccounts sourceClientAccounts, List<Allocation> allocations, InterestRates interestRates)
+        public Structure(ClientAccounts sourceClientAccounts, List<Allocation> allocations, InterestRates interestRates, PaymentInstructionService paymentInstructionService)
         {
             if(sourceClientAccounts.Count < 2) throw new ArgumentException("A structure must have at least 2 source accounts.");
             
@@ -26,7 +27,7 @@ namespace AnujBank
             this.sourceClientAccounts = sourceClientAccounts;
             this.allocations = allocations;
             this.interestRates = interestRates;
-
+            this.paymentInstructionService = paymentInstructionService;
         }
 
         public bool SharesASourceAccountWith(Structure newStructure)
@@ -61,6 +62,15 @@ namespace AnujBank
 
 
             return interestAllocations;
+        }
+
+        public void GeneratePaymentInstruction()
+        {
+            allocations.ForEach( al => 
+                paymentInstructionService.Generate(new Payment(al.GetAccountNumber().ToString(),
+                                                               new decimal(GetAllocation()[al.GetAccount()]), 
+                                                               DateTime.Now))
+                );
         }
     }
 }

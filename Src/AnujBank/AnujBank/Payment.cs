@@ -39,5 +39,28 @@ namespace AnujBank
             }
             return "debit";
         }
+
+        public bool Equals(Payment other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return other.amount == amount && Equals(other.account, account);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (Payment)) return false;
+            return Equals((Payment) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (amount.GetHashCode()*397) ^ account.GetHashCode();
+            }
+        }
     }
 }

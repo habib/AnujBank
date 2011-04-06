@@ -8,7 +8,7 @@ namespace AnujBank
     {
         public String OutputPath = "Output\\";
         private int counter=1;
-        public  void Generate(Payment payment)
+        public virtual void Generate(Payment payment)
         {
             CreateOutPutDirectoryIfDoesNotExist();
             CreateOutputXml(payment);
